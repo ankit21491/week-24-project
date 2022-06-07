@@ -21,7 +21,7 @@ pipeline {
                  script{
                         dir("terraform")
                         {
-                            git "https://github.com/troy-ingram/week-24-project.git"
+                            git "https://github.com/ankit21491/week-24-project.git"
                         }
                     }
                 }
@@ -33,7 +33,7 @@ pipeline {
                     equals expected: true, actual: params.destroy
                 }
             }
-            
+
             steps {
                 sh 'terraform init -input=false'
                 sh 'terraform workspace select ${environment} || terraform workspace new ${environment}'
@@ -51,9 +51,9 @@ pipeline {
                     equals expected: true, actual: params.destroy
                 }
            }
-           
-                
-            
+
+
+
 
            steps {
                script {
@@ -70,17 +70,17 @@ pipeline {
                     equals expected: true, actual: params.destroy
                 }
             }
-            
+
             steps {
                 sh "terraform apply -input=false tfplan"
             }
         }
-        
+
         stage('Destroy') {
             when {
                 equals expected: true, actual: params.destroy
             }
-        
+
         steps {
            sh "terraform destroy --auto-approve"
         }
